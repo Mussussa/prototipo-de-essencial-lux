@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-luxGold: #D4AF37;
+  --color-luxDark: #0B0C10;
+  --color-luxGray: #1F2833;
+}
+
+/* Animação leve de entrada e suave brilho */
+@keyframes fadeInLogo {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeInLogo {
+  animation: fadeInLogo 0.6s ease-out forwards;
+}
+
+body {
+  background-color: var(--color-luxDark);
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
