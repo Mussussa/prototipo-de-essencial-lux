@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 
-export default function WhatsappModal({ product, onClose, phoneNumber = "244900000000" }) {
+export default function WhatsappModal({ product, onClose, phoneNumber = "+258877305740" }) {
   const [selectedQuestion, setSelectedQuestion] = useState("Gostaria de obter mais informações sobre este produto.");
 
   const defaultQuestions = [

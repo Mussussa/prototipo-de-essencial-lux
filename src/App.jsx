@@ -104,7 +104,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-luxDark text-white flex flex-col justify-between">
       <div>
-        <Navbar phoneNumber="244900000000" />
+        <Navbar phoneNumber="+258877305740" />
         <Hero />
 
         {/* Secção do Catálogo */}
@@ -176,7 +176,7 @@ export default function App() {
         <WhatsappModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
-          phoneNumber="244900000000"
+          phoneNumber="+258877305740"
         />
       )}
     </div>

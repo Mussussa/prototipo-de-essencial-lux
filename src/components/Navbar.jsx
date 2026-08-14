@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Navbar({ phoneNumber = "244900000000" }) {
+export default function Navbar({ phoneNumber = "+258877305740" }) {
   const handleQuickContact = () => {
     const text = encodeURIComponent(
       "Olá, Essência Lux! 🌟 Gostaria de tirar algumas dúvidas.",
