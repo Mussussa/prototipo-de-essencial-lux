@@ -1,7 +1,12 @@
 import React from 'react';
-import { CATEGORIES } from '../data/products';
 
-export default function SearchBar({ search, setSearch, selectedCategory, setSelectedCategory }) {
+export default function SearchBar({ 
+  search, 
+  setSearch, 
+  selectedCategory, 
+  setSelectedCategory,
+  categories = ['Todos'] // Recebe as categorias dinâmicas da planilha
+}) {
   return (
     <div className="space-y-4 mb-6">
       {/* Campo de Pesquisa */}
@@ -32,7 +37,7 @@ export default function SearchBar({ search, setSearch, selectedCategory, setSele
 
       {/* Categorias Deslizantes (Mobile Scroll) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none no-scrollbar snap-x">
-        {CATEGORIES.map((cat) => {
+        {categories.map((cat) => {
           const isActive = selectedCategory === cat;
           return (
             <button

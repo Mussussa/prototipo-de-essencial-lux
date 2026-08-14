@@ -6,7 +6,7 @@ export const PRODUCTS = [
     name: "Perfume Essência Gold 100ml",
     category: "Perfumes",
     price: "18.500 Kz",
-    image: "/logo.png", // Substitua pelo caminho da foto na pasta public/
+    image: "/logo.jpeg", // Substitua pelo caminho da foto na pasta public/
     description: "Fragrância marcante com notas amadeiradas e toque de baunilha oriental.",
     badge: "Mais Vendido"
   },
@@ -15,7 +15,7 @@ export const PRODUCTS = [
     name: "Difusor de Ambiente Amber",
     category: "Difusores",
     price: "12.000 Kz",
-    image: "/logo.png",
+    image: "/logo.jpeg",
     description: "Aroma envolvente para transformar a atmosfera do seu ambiente.",
     badge: "Novo"
   },
@@ -24,7 +24,7 @@ export const PRODUCTS = [
     name: "Vela Aromática Premium",
     category: "Velas",
     price: "8.500 Kz",
-    image: "/logo.png",
+    image: "/logo.jpeg",
     description: "Cera vegetal com óleos essenciais para momentos de relaxamento.",
     badge: null
   },
@@ -33,7 +33,7 @@ export const PRODUCTS = [
     name: "Kit Essência Lux Exclusive",
     category: "Kits Luxo",
     price: "32.000 Kz",
-    image: "/logo.png",
+    image: "/logo.jpeg",
     description: "Edição especial contendo Perfume, Difusor e Vela em embalagem especial.",
     badge: "Exclusivo"
   }
