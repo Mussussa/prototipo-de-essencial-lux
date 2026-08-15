@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
 
-export default function WhatsappModal({ product, onClose, phoneNumber = "+258877305740" }) {
+export default function WhatsappModal({ product, onClose, phoneNumber = "258877305740" }) {
   const [selectedQuestion, setSelectedQuestion] = useState("Gostaria de obter mais informações sobre este produto.");
 
   const defaultQuestions = [
@@ -12,20 +12,32 @@ export default function WhatsappModal({ product, onClose, phoneNumber = "+258877
   ];
 
   const handleSendToWhatsApp = () => {
+    if (!product) return;
+
+    // 1. Remove qualquer caractere não numérico (+, espaços, hífens)
+    const cleanNumber = phoneNumber.replace(/\D/g, '');
+
+    // 2. Monta a mensagem formatada
     const text = `Olá, Essência Lux! 🌟\n\nTenho interesse no produto: *${product.name}* (Cód: #${product.id})\n\n❓ *Minha Dúvida:* ${selectedQuestion}`;
     const encodedText = encodeURIComponent(text);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
     
-    window.open(whatsappUrl, '_blank');
+    // 3. Link oficial do WhatsApp
+    const whatsappUrl = `https://wa.me/${cleanNumber}?text=${encodedText}`;
+
+    // 4. Redirecionamento correto para mobile e desktop
+    window.location.href = whatsappUrl;
+    
     onClose();
   };
+
+  if (!product) return null;
 
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 p-4 animate-fadeIn">
       <div className="bg-luxGray text-white w-full max-w-md rounded-t-2xl sm:rounded-2xl p-6 border border-luxGold/20 shadow-2xl">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-bold text-luxGold">Atendimento WhatsApp</h3>
-          <button onClick={onClose} className="p-1 text-gray-400 hover:text-luxGold">
+          <button onClick={onClose} className="p-1 text-gray-400 hover:text-luxGold" aria-label="Fechar">
             <X size={20} />
           </button>
         </div>
@@ -33,8 +45,8 @@ export default function WhatsappModal({ product, onClose, phoneNumber = "+258877
         <p className="text-xs text-gray-300 mb-2">Produto selecionado:</p>
         <div className="bg-black/40 p-3 rounded-xl flex items-center gap-3 mb-4 border border-white/5">
           <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded-lg" />
-          <div>
-            <p className="font-semibold text-sm leading-snug">{product.name}</p>
+          <div className="min-w-0 flex-1">
+            <p className="font-semibold text-sm leading-snug truncate">{product.name}</p>
             <p className="text-xs text-luxGold font-bold mt-0.5">{product.price}</p>
           </div>
         </div>
