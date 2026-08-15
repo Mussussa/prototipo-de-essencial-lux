@@ -4,8 +4,9 @@ import Hero from './components/Hero';
 import SearchBar from './components/SearchBar';
 import ProductCard from './components/ProductCard';
 import WhatsappModal from './components/WhatsappModal';
+import SplashIntro from './components/SplashIntro'; // 👈 Importação do Splash
 
-// Link direto de exportação CSV da sua tabela publicada
+// Link direto de exportação CSV da sua tabela publicada no Google Sheets
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQJpFBjTFOKCIy8LbWVZAvohPrwY9ugfFWyaJJei00b5ylSF5ox1mf_zmErIfffpaYJx2igR_gpSn5z/pub?output=csv";
 
 // Função nativa para converter o texto CSV do Google num Array de Objetos JSON
@@ -50,8 +51,24 @@ export default function App() {
 
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+  
+  // Modal de Pedido Direto
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // 🛒 ESTADO DO CARRINHO DE COMPRAS
+  const [cartItems, setCartItems] = useState([]);
+
+  // Função para Adicionar ao Carrinho
+  const handleAddToCart = (product) => {
+    setCartItems([...cartItems, product]);
+  };
+
+  // Função para Remover do Carrinho
+  const handleRemoveFromCart = (indexToRemove) => {
+    setCartItems(cartItems.filter((_, index) => index !== indexToRemove));
+  };
+
+  // Carregar produtos do Google Sheets
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -65,7 +82,6 @@ export default function App() {
         const csvText = await response.text();
         const data = parseCSV(csvText);
 
-        // Filtrar apenas produtos disponíveis
         const activeProducts = data.filter(
           (p) => !p.available || String(p.available).toUpperCase() === 'TRUE'
         );
@@ -78,7 +94,6 @@ export default function App() {
         setLoading(false);
       }
     }
-
     fetchProducts();
   }, []);
 
@@ -103,8 +118,18 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-luxDark text-white flex flex-col justify-between">
+      {/* 🚀 Ecrã Inicial Animado (Splash Screen) */}
+      <SplashIntro />
+
       <div>
-        <Navbar phoneNumber="+258877305740" />
+        {/* Passando os dados do carrinho para a Navbar */}
+        <Navbar 
+          phoneNumber="258858573868" 
+          callPhoneNumber="258877305740"
+          cartItems={cartItems}
+          onRemoveFromCart={handleRemoveFromCart}
+        />
+        
         <Hero />
 
         {/* Secção do Catálogo */}
@@ -150,7 +175,8 @@ export default function App() {
                 <ProductCard
                   key={product.id || product.name}
                   product={product}
-                  onSelectProduct={setSelectedProduct}
+                  onSelectProduct={setSelectedProduct}     
+                  onAddToCart={handleAddToCart}            
                 />
               ))}
             </div>
@@ -171,12 +197,13 @@ export default function App() {
         </main>
       </div>
 
-      {/* Modal do WhatsApp */}
+      {/* Modal do WhatsApp (Para pedido direto único) */}
       {selectedProduct && (
         <WhatsappModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
-          phoneNumber="+258877305740"
+          whatsappNumber="258858573868"
+          callPhoneNumber="258877305740"
         />
       )}
     </div>

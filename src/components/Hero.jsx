@@ -1,19 +1,27 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-// --- SUBCOMPONENTE: Carrossel 3D Coverflow Compacto ---
+// --- SUBCOMPONENTE: Carrossel 3D Coverflow Compacto (5 Imagens Multissetorial) ---
 function Smooth3DSlideshow({
   slides = [
     {
-      image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=600&q=80",
-      title: "Perfumes Exclusivos",
+      image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=600&q=80",
+      title: "Variedades & Tendências",
     },
     {
-      image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=600&q=80",
-      title: "Velas Aromáticas",
+      image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+      title: "Smartwatches & Eletrónicos",
     },
     {
-      image: "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?auto=format&fit=crop&w=600&q=80",
-      title: "Difusores de Luxo",
+      image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80",
+      title: "Cosméticos & Cuidados",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=600&q=80",
+      title: "Acessórios de Luxo",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1555529771-835f59fc5efe?auto=format&fit=crop&w=600&q=80",
+      title: "Utilidades & Novidades",
     },
   ],
   cardWidth = 240,
@@ -136,36 +144,50 @@ export default function Hero() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-36 bg-luxGold/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-xl mx-auto space-y-3">
-        {/* Etiqueta / Descrição Superior */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-luxGold/10 border border-luxGold/30 text-luxGold text-[11px] font-semibold tracking-wider uppercase">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
-          </svg>
-          Essência Lux • Coleção 2026
+        {/* Banner Animado de Entrega em Chimoio */}
+        <div className="relative inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-luxGold/15 border border-luxGold/40 text-luxGold text-[11px] font-semibold tracking-wider uppercase shadow-lg animate-pulse">
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-luxGold opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-luxGold"></span>
+          </span>
+          <span className="text-sm">🇲🇿</span>
+          <span>Entregas Rápidas em Chimoio • 📦 ➔ 📍</span>
         </div>
 
-        {/* Título Principal */}
+        {/* Título Principal Focado em Variedades */}
         <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-tight">
-          Sinta a <span className="text-luxGold">Sofisticação</span> em Cada Aroma
+          Tudo o que Você Precisa com <span className="text-luxGold">Qualidade e Praticidade</span>
         </h1>
 
-        {/* Carrossel 3D Coverflow Compacto */}
+        {/* Carrossel 3D Coverflow com 5 Imagens */}
         <div className="my-2">
           <Smooth3DSlideshow />
         </div>
 
-        {/* Descrição Curta */}
+        {/* Proposta de Valor / Atendimento */}
         <p className="text-xs text-gray-300 max-w-xs sm:max-w-sm mx-auto leading-relaxed">
-          Catálogo exclusivo de perfumaria fina e essências marcantes para o seu bem-estar.
+          Explore o nosso catálogo diversificado. Escolha os seus produtos favoritos e finalize o pedido de forma simples e direta pelo WhatsApp.
         </p>
 
+        {/* Badges de Benefícios */}
+        <div className="grid grid-cols-2 gap-2 pt-1 max-w-xs mx-auto text-[11px] text-gray-200">
+          <div className="bg-luxGray/40 border border-white/5 rounded-xl p-2 flex items-center justify-center gap-1.5 shadow-inner">
+            <span className="text-luxGold text-sm">🛍️</span>
+            <span className="font-medium">Produtos Variados</span>
+          </div>
+          <div className="bg-luxGray/40 border border-white/5 rounded-xl p-2 flex items-center justify-center gap-1.5 shadow-inner">
+            <span className="text-luxGold text-sm">💬</span>
+            <span className="font-medium">Atendimento via WhatsApp</span>
+          </div>
+        </div>
+
         {/* Botão de Scroll Rápido ao Catálogo */}
-        <div className="pt-1">
+        <div className="pt-2">
           <button
             onClick={scrollToCatalog}
-            className="inline-flex items-center gap-1.5 bg-luxGold text-luxDark font-bold px-5 py-2 rounded-xl text-xs shadow-lg hover:bg-yellow-400 transition-all active:scale-95"
+            className="inline-flex items-center gap-1.5 bg-luxGold text-luxDark font-bold px-6 py-2.5 rounded-xl text-xs shadow-lg hover:bg-yellow-400 transition-all active:scale-95"
           >
-            <span>Ver Produtos</span>
+            <span>Explorar Catálogo Agora</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="m6 9 6 6 6-6"/>
             </svg>
