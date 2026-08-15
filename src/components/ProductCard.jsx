@@ -53,16 +53,16 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
 
             {/* Grupo de Botões */}
             <div className="flex items-center gap-2 shrink-0">
-              {/* NOVO: Botão Adicionar ao Carrinho */}
+              {/* NOVO: Botão Adicionar ao Carrinho com ícone de carrinho */}
               <button
                 onClick={() => onAddToCart(product)}
                 className="bg-luxDark hover:bg-luxGold/20 border border-luxGold/30 text-luxGold p-2 rounded-xl flex items-center justify-center transition-all active:scale-95 shadow-md"
                 title="Adicionar ao Carrinho"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                  <path d="M3 6h18" />
-                  <path d="M16 10a4 4 0 0 1-8 0" />
+                  <circle cx="8" cy="21" r="1" />
+                  <circle cx="19" cy="21" r="1" />
+                  <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
                 </svg>
               </button>
 
@@ -108,18 +108,19 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
               </div>
 
               <div className="flex gap-2">
-                {/* Carrinho no Modal */}
+                {/* Carrinho no Modal com ícone de carrinho */}
                 <button
                   onClick={() => {
                     onAddToCart(product);
                     setIsPreviewOpen(false);
                   }}
                   className="bg-luxDark border border-luxGold/30 text-luxGold p-2 rounded-xl"
+                  title="Adicionar ao Carrinho"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                    <path d="M3 6h18" />
-                    <path d="M16 10a4 4 0 0 1-8 0" />
+                    <circle cx="8" cy="21" r="1" />
+                    <circle cx="19" cy="21" r="1" />
+                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
                   </svg>
                 </button>
                 <button

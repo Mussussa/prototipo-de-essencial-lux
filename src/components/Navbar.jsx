@@ -22,7 +22,6 @@ export default function Navbar({
   // Função para limpar o texto do preço (ex: "1.500,00 MT") e transformar em número (1500)
   const parsePrice = (priceStr) => {
     if (!priceStr) return 0;
-    // Remove "MT", espaços, converte vírgula para ponto e remove pontos de milhares
     const cleanStr = priceStr.toString().replace(/[^\d.,]/g, '').replace(/\./g, '').replace(',', '.');
     return parseFloat(cleanStr) || 0;
   };
@@ -39,7 +38,6 @@ export default function Navbar({
       text += `(ID: ${item.id})\n\n`;
     });
 
-    // Formatador básico para Moçambique, ajuste conforme a sua moeda
     const formattedTotal = new Intl.NumberFormat('pt-MZ', { style: 'currency', currency: 'MZN' }).format(cartTotal);
     
     text += `*TOTAL ESTIMADO:* ${formattedTotal}`;
@@ -48,53 +46,56 @@ export default function Navbar({
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full bg-luxDark/85 backdrop-blur-md border-b border-luxGold/20 transition-all">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-40 w-full bg-luxDark/90 backdrop-blur-md border-b border-luxGold/30 transition-all shadow-xl">
+        {/* Navbar com altura aumentada e preenchimento melhorado */}
+        <div className="max-w-5xl mx-auto px-4 py-3.5 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer select-none">
             <div className="relative flex items-center justify-center animate-fadeInLogo">
-              <div className="absolute -inset-1 bg-luxGold/20 rounded-full blur-sm"></div>
+              <div className="absolute -inset-1.5 bg-luxGold/30 rounded-full blur-md"></div>
               <img
                 src="/logo.jpeg"
                 alt="Essência Lux Logo"
-                width={38}
-                height={38}
-                className="relative w-9 h-9 sm:w-10 sm:h-10 object-contain rounded-full border border-luxGold/40 shadow-lg hover:scale-105 transition-transform duration-300"
+                width={100}
+                height={100}
+                className="relative w-11 h-11 sm:w-12 sm:h-12 object-cover rounded-full border-2 border-luxGold/60 shadow-xl hover:scale-180 transition-transform duration-300"
                 loading="eager"
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-base sm:text-lg tracking-wide text-white leading-none">
+              <span className="font-extrabold text-base sm:text-lg tracking-wide text-white leading-tight">
                 Essência <span className="text-luxGold">Lux</span>
               </span>
-              <span className="text-[10px] text-gray-400 tracking-widest uppercase mt-0.5">
+              <span className="text-[10px] sm:text-[11px] text-gray-300 font-semibold tracking-widest uppercase mt-0.5">
                 Catálogo Exclusivo
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <button onClick={handleCall} className="p-2 text-luxGold bg-luxGold/10 hover:bg-luxGold/20 rounded-full border border-luxGold/20 transition-all active:scale-95 flex items-center justify-center" aria-label="Ligar para Atendimento">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <button onClick={handleCall} className="p-2.5 text-luxGold bg-luxGold/10 hover:bg-luxGold/20 rounded-full border border-luxGold/30 transition-all active:scale-95 flex items-center justify-center shadow-md" aria-label="Ligar para Atendimento">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
             </button>
 
-            <button onClick={handleQuickContact} className="hidden sm:flex items-center gap-1.5 bg-emerald-600/15 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-3 py-1.5 rounded-full text-xs font-medium transition-all active:scale-95">
+            <button onClick={handleQuickContact} className="hidden sm:flex items-center gap-1.5 bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-400 border border-emerald-500/40 px-3.5 py-2 rounded-full text-xs font-bold transition-all active:scale-95 shadow-md">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
               <span>WhatsApp</span>
             </button>
 
-            {/* Ícone da Sacola COM LÓGICA DE BADGE */}
+            {/* Botão de Carrinho descritivo com ícone de sacola/carrinho nítido */}
             <button 
               onClick={() => setIsCartOpen(true)}
-              className="relative p-2 text-luxGold bg-luxGold/10 hover:bg-luxGold/20 rounded-full border border-luxGold/20 transition-all active:scale-95"
+              className="relative px-3.5 py-2 text-luxGold bg-luxGold/15 hover:bg-luxGold/25 rounded-xl border border-luxGold/30 transition-all active:scale-95 flex items-center gap-2 shadow-md group"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                <path d="M3 6h18" />
-                <path d="M16 10a4 4 0 0 1-8 0" />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform">
+                <circle cx="8" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
               </svg>
+              <span className="text-xs font-bold tracking-wide text-white hidden sm:inline">Carrinho</span>
+              
               {/* Contador do Carrinho */}
               {cartItems.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md">
+                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-lg animate-bounce">
                   {cartItems.length}
                 </span>
               )}
