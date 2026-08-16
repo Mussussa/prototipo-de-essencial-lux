@@ -23,7 +23,7 @@ export default function ContactModal({
   // 1. Enviar mensagem para o WhatsApp
   const handleSendToWhatsApp = () => {
     if (!product) return;
-    const text = `Olá, Essência Lux! 🌟\n\nTenho interesse no produto: *${product.name}* (Cód: #${product.id})\n\n❓ *Minha Dúvida:* ${selectedQuestion}`;
+    const text = `Olá, Essência Lux! 🌟\n\nTenho interesse no produto: *${product.name}* (Cód: #${product.id})\n #${product.image}) \n\n❓ *Minha Dúvida:* ${selectedQuestion}`;
     const encodedText = encodeURIComponent(text);
     window.location.href = `https://wa.me/${cleanWhatsapp}?text=${encodedText}`;
     onClose();
@@ -38,7 +38,7 @@ export default function ContactModal({
   // 3. Enviar Mensagem SMS Normal
   const handleSendSMS = () => {
     if (!product) return;
-    const smsText = `Essência Lux: Interesse no produto ${product.name} (#${product.id}). ${selectedQuestion}`;
+    const smsText = `Essência Lux: Interesse no produto ${product.name} (#${product.id})  #${product.image}. ${selectedQuestion}`;
     const encodedText = encodeURIComponent(smsText);
     window.location.href = `sms:+${cleanCallNum}?body=${encodedText}`;
     onClose();
