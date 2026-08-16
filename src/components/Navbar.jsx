@@ -36,6 +36,7 @@ export default function Navbar({
     cartItems.forEach((item, index) => {
       text += `${index + 1}. *${item.name}* - ${item.price}\n`;
       text += `(ID: ${item.id})\n\n`;
+      text += `(Imagem: ${item.image})\n\n`;
     });
 
     const formattedTotal = new Intl.NumberFormat('pt-MZ', { style: 'currency', currency: 'MZN' }).format(cartTotal);
