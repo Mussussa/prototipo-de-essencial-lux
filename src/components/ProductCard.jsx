@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -6,18 +6,23 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
   return (
     <>
       <div className="bg-luxGray/50 border border-luxGold/15 rounded-2xl overflow-hidden shadow-lg flex flex-col justify-between hover:border-luxGold/40 transition-all duration-300 group">
-        
         {/* Imagem + Badge */}
-        <div 
+        <div
           onClick={() => setIsPreviewOpen(true)}
           className="relative aspect-square bg-black/40 overflow-hidden cursor-pointer group/img"
           title="Clique para ver imagem ampliada"
         >
-          {product.badge && (
+          {product.badge == 'Disponivel' ? (
             <span className="absolute top-2.5 left-2.5 z-10 bg-luxGold text-luxDark text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md shadow">
               {product.badge}
             </span>
-          )}
+          ): (
+            <span className="absolute top-2.5 left-2.5 z-10 bg-red-600 text-luxDark text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-md shadow">
+              {product.badge}
+            </span>
+          )
+          
+          }
           <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/img:opacity-100 transition-opacity z-10 flex items-center justify-center">
             <span className="bg-black/70 text-white text-[11px] px-3 py-1.5 rounded-full backdrop-blur-sm flex items-center gap-1 font-medium shadow-lg border border-white/10">
               🔍 Ver foto
@@ -48,34 +53,139 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
           <div className="pt-2 border-t border-white/5 flex items-center justify-between gap-2">
             <div>
               <span className="text-[10px] text-gray-400 block">Preço</span>
-              <span className="font-extrabold text-sm text-luxGold">{product.price}</span>
+              <span className="font-extrabold text-sm text-luxGold">
+                {product.price}
+              </span>
             </div>
 
             {/* Grupo de Botões */}
             <div className="flex items-center gap-2 shrink-0">
               {/* NOVO: Botão Adicionar ao Carrinho com ícone de carrinho */}
-              <button
+              {/* <button
                 onClick={() => onAddToCart(product)}
                 className="bg-luxDark hover:bg-luxGold/20 border border-luxGold/30 text-luxGold p-2 rounded-xl flex items-center justify-center transition-all active:scale-95 shadow-md"
                 title="Adicionar ao Carrinho"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <circle cx="8" cy="21" r="1" />
                   <circle cx="19" cy="21" r="1" />
                   <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
                 </svg>
-              </button>
+              </button> */}
 
               {/* Botão Original de Encomendar (WhatsApp Direto) */}
-              <button
+              {product.badge == "Disponivel" ? (
+                <>
+                  <button
+                    onClick={() => onAddToCart(product)}
+                    className="bg-luxDark hover:bg-luxGold/20 border border-luxGold/30 text-luxGold p-2 rounded-xl flex items-center justify-center transition-all active:scale-95 shadow-md"
+                    title="Adicionar ao Carrinho"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="8" cy="21" r="1" />
+                      <circle cx="19" cy="21" r="1" />
+                      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => onSelectProduct(product)}
+                    className="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 shadow-md"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                    </svg>
+                    <span>Pedir</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => onAddToCart(product)}
+                    className="bg-yellow-50 hover:bg-white/20 border border-luxGold/30 text-luxGold p-2 rounded-xl flex items-center justify-center transition-all active:scale-95 shadow-md"
+                    title="Adicionar ao Carrinho"
+                    disabled  
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="8" cy="21" r="1" />
+                      <circle cx="19" cy="21" r="1" />
+                      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => onSelectProduct(product)}
+                    className="bg-white hover:bg-gray-100 text-gray-400 px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 shadow-md"
+                    disabled
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                    </svg>
+                    <span>Pedir</span>
+                  </button>
+                </>
+              )}
+              {/* <button
                 onClick={() => onSelectProduct(product)}
                 className="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 shadow-md"
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
                 </svg>
                 <span>Pedir</span>
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -83,13 +193,13 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
 
       {/* 🔍 MODAL DE VISUALIZAÇÃO AMPLIADA */}
       {isPreviewOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-fadeIn"
-          onClick={() => setIsPreviewOpen(false)} 
+          onClick={() => setIsPreviewOpen(false)}
         >
-          <div 
+          <div
             className="relative max-w-md w-full bg-luxDark border border-luxGold/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col"
-            onClick={(e) => e.stopPropagation()} 
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setIsPreviewOpen(false)}
@@ -98,13 +208,23 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
               ✕
             </button>
             <div className="w-full max-h-[70vh] bg-black flex items-center justify-center overflow-hidden">
-              <img src={product.image} alt={product.name} className="max-w-full max-h-[70vh] object-contain" />
+              <img
+                src={product.image}
+                alt={product.name}
+                className="max-w-full max-h-[70vh] object-contain"
+              />
             </div>
             <div className="p-4 bg-luxGray/90 flex items-center justify-between border-t border-white/10 gap-2">
               <div className="min-w-0 flex-1">
-                <h4 className="text-white font-bold text-xs sm:text-sm leading-snug truncate">{product.name}</h4>
-                <p className="text-luxGold font-extrabold text-sm mt-0.5">{product.price}</p>
-                <p className="text-luxGold font-extrabold text-sm mt-0.5">{product.description}</p>
+                <h4 className="text-white font-bold text-xs sm:text-sm leading-snug truncate">
+                  {product.name}
+                </h4>
+                <p className="text-luxGold font-extrabold text-sm mt-0.5">
+                  {product.price}
+                </p>
+                <p className="text-luxGold font-extrabold text-sm mt-0.5">
+                  {product.description}
+                </p>
               </div>
 
               <div className="flex gap-2">
@@ -117,7 +237,16 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
                   className="bg-luxDark border border-luxGold/30 text-luxGold p-2 rounded-xl"
                   title="Adicionar ao Carrinho"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <circle cx="8" cy="21" r="1" />
                     <circle cx="19" cy="21" r="1" />
                     <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
