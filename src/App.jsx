@@ -4,12 +4,10 @@ import Hero from './components/Hero';
 import SearchBar from './components/SearchBar';
 import ProductCard from './components/ProductCard';
 import WhatsappModal from './components/WhatsappModal';
-import SplashIntro from './components/SplashIntro'; // 👈 Importação do Splash
+import SplashIntro from './components/SplashIntro';
 
-// Link direto de exportação CSV da sua tabela publicada no Google Sheets
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQJpFBjTFOKCIy8LbWVZAvohPrwY9ugfFWyaJJei00b5ylSF5ox1mf_zmErIfffpaYJx2igR_gpSn5z/pub?output=csv";
 
-// Função nativa para converter o texto CSV do Google num Array de Objetos JSON
 function parseCSV(text) {
   const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
   if (lines.length < 2) return [];
@@ -49,35 +47,29 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Estados de Busca e Filtros
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('Todos');
   
-  // Modal de Pedido Direto
   const [selectedProduct, setSelectedProduct] = useState(null);
-
-  // 🛒 ESTADO DO CARRINHO DE COMPRAS
   const [cartItems, setCartItems] = useState([]);
 
-  // Função para Adicionar ao Carrinho
   const handleAddToCart = (product) => {
     setCartItems([...cartItems, product]);
   };
 
-  // Função para Remover do Carrinho
   const handleRemoveFromCart = (indexToRemove) => {
     setCartItems(cartItems.filter((_, index) => index !== indexToRemove));
   };
 
-  // Carregar produtos do Google Sheets
   useEffect(() => {
     async function fetchProducts() {
       try {
         setLoading(true);
         const response = await fetch(CSV_URL);
         
-        if (!response.ok) {
-          throw new Error('Falha ao carregar catálogo');
-        }
+        if (!response.ok) throw new Error('Falha ao carregar catálogo');
 
         const csvText = await response.text();
         const data = parseCSV(csvText);
@@ -97,13 +89,13 @@ export default function App() {
     fetchProducts();
   }, []);
 
-  // Extrai as categorias dinamicamente
+  // Extrai lista única de Categorias
   const categories = useMemo(() => {
     const list = products.map((p) => p.category).filter(Boolean);
     return ['Todos', ...new Set(list)];
   }, [products]);
 
-  // Filtragem em memória
+  // 1. Filtragem combinada: Pesquisa, Categoria e Subcategoria
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const matchesSearch = 
@@ -111,18 +103,31 @@ export default function App() {
         (product.description && product.description.toLowerCase().includes(search.toLowerCase()));
       
       const matchesCategory = selectedCategory === 'Todos' || product.category === selectedCategory;
+      const matchesSubcategory = selectedSubcategory === 'Todos' || product.subcategory === selectedSubcategory;
       
-      return matchesSearch && matchesCategory;
+      return matchesSearch && matchesCategory && matchesSubcategory;
     });
-  }, [products, search, selectedCategory]);
+  }, [products, search, selectedCategory, selectedSubcategory]);
+
+  // 2. Agrupamento Hierárquico: Categoria -> Subcategoria
+  const groupedProducts = useMemo(() => {
+    return filteredProducts.reduce((acc, product) => {
+      const cat = product.category || "Outras Categorias";
+      const sub = product.subcategory || "Geral";
+
+      if (!acc[cat]) acc[cat] = {};
+      if (!acc[cat][sub]) acc[cat][sub] = [];
+
+      acc[cat][sub].push(product);
+      return acc;
+    }, {});
+  }, [filteredProducts]);
 
   return (
     <div className="min-h-screen bg-luxDark text-white flex flex-col justify-between">
-      {/* 🚀 Ecrã Inicial Animado (Splash Screen) */}
       <SplashIntro />
 
       <div>
-        {/* Passando os dados do carrinho para a Navbar */}
         <Navbar 
           phoneNumber="258858573868" 
           callPhoneNumber="258877305740"
@@ -132,17 +137,20 @@ export default function App() {
         
         <Hero />
 
-        {/* Secção do Catálogo */}
         <main id="catalog" className="max-w-5xl mx-auto px-4 py-6">
+          {/* Barra de Pesquisa Integrada */}
           <SearchBar
             search={search}
             setSearch={setSearch}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
+            selectedSubcategory={selectedSubcategory}
+            setSelectedSubcategory={setSelectedSubcategory}
             categories={categories}
+            products={products}
           />
 
-          {/* Skeleton Screen enquanto carrega */}
+          {/* Skeleton Loading */}
           {loading && (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {[1, 2, 3, 4, 5, 6].map((n) => (
@@ -168,36 +176,72 @@ export default function App() {
             </div>
           )}
 
-          {/* Grelha de Produtos */}
+          {/* Listagem Renderizada por Categoria e Subcategoria */}
           {!loading && !error && filteredProducts.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id || product.name}
-                  product={product}
-                  onSelectProduct={setSelectedProduct}     
-                  onAddToCart={handleAddToCart}            
-                />
+            <div className="space-y-10">
+              {Object.entries(groupedProducts).map(([categoria, subcategoriasMap]) => (
+                <div key={categoria} className="space-y-6 animate-fadeIn">
+                  
+                  {/* Título da Categoria Principal */}
+                  <div className="flex items-center gap-3">
+                    <h2 className="text-lg md:text-xl font-bold text-luxGold uppercase tracking-widest">
+                      {categoria}
+                    </h2>
+                    <div className="h-px flex-1 bg-gradient-to-r from-luxGold/50 to-transparent"></div>
+                  </div>
+
+                  {/* Bloco de Subcategorias pertencentes à Categoria */}
+                  {Object.entries(subcategoriasMap).map(([subcategoria, produtosLista]) => (
+                    <div key={subcategoria} className="space-y-3 pl-1">
+                      
+                      {/* Divisor Visual de Subcategoria (exibe quando a subcategoria for especificada) */}
+                      {subcategoria !== 'Geral' && (
+                        <div className="flex items-center gap-2 pt-1">
+                          <span className="text-xs font-semibold text-gray-300 tracking-wide flex items-center gap-1.5">
+                            <span className="text-luxGold text-sm">↳</span>
+                            {subcategoria}
+                          </span>
+                          <div className="h-px flex-1 bg-white/10"></div>
+                        </div>
+                      )}
+
+                      {/* Grelha de Produtos */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                        {produtosLista.map((product) => (
+                          <ProductCard
+                            key={product.id || product.name}
+                            product={product}
+                            onSelectProduct={setSelectedProduct}     
+                            onAddToCart={handleAddToCart}            
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               ))}
             </div>
           )}
 
-          {/* Nenhum produto encontrado */}
+          {/* Nenhum Produto Encontrado */}
           {!loading && !error && filteredProducts.length === 0 && (
             <div className="text-center py-12 text-gray-400 space-y-2">
-              <p className="text-sm">Nenhum produto encontrado.</p>
+              <p className="text-sm">Nenhum produto encontrado com esses filtros.</p>
               <button
-                onClick={() => { setSearch(''); setSelectedCategory('Todos'); }}
+                onClick={() => { 
+                  setSearch(''); 
+                  setSelectedCategory('Todos'); 
+                  setSelectedSubcategory('Todos'); 
+                }}
                 className="text-xs text-luxGold underline font-medium"
               >
-                Limpar filtros
+                Limpar todos os filtros
               </button>
             </div>
           )}
         </main>
       </div>
 
-      {/* Modal do WhatsApp (Para pedido direto único) */}
       {selectedProduct && (
         <WhatsappModal
           product={selectedProduct}
