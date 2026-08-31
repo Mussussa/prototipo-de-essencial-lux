@@ -1,7 +1,9 @@
 {
   "name": "essencia-lux",
+  "description": "Catálogo e E-commerce da Essência Lux",
+  "author": "Ismael Mussussa Chaibo",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@sanity/client": "^8.2.0",
     "@tailwindcss/vite": "^4.3.3",
     "lucide-react": "^1.27.0",
     "react": "^19.2.7",

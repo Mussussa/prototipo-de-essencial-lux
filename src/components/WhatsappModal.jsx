@@ -23,7 +23,7 @@ export default function ContactModal({
   // 1. Enviar mensagem para o WhatsApp
   const handleSendToWhatsApp = () => {
     if (!product) return;
-    const text = `Olá, Essência Lux! 🌟\n\nTenho interesse no produto: *${product.name}* (Cód: #${product.id})\n LINK:${product.image}) \n\n❓ *Minha Dúvida:* ${selectedQuestion}`;
+    const text = `Olá, Essência Lux! 🌟\n\nTenho interesse no produto: *${product.name}* \n LINK:${product.image}) \n\n❓ *Minha Dúvida:* ${selectedQuestion}`;
     const encodedText = encodeURIComponent(text);
     window.location.href = `https://wa.me/${cleanWhatsapp}?text=${encodedText}`;
     onClose();
