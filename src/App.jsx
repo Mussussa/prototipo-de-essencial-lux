@@ -100,6 +100,40 @@ export default function App() {
     }, {});
   }, [filteredProducts]);
 
+  // 3. Ordenação de alta performance baseada na lista personalizada
+  const orderedGroupedProducts = useMemo(() => {
+    // A tua ordem desejada
+    const order = [
+      "Camisas",
+      "Calças",
+      "Relógios",
+      "Carteira",
+      "Pulseiras",
+      "Bolsas",
+      "Calçados",
+      "Colares",
+      "calcões"
+    ];
+
+    const sortedGroups = {};
+
+    // 1º passo: Inserir as categorias exatas na ordem definida
+    order.forEach((category) => {
+      if (groupedProducts[category]) {
+        sortedGroups[category] = groupedProducts[category];
+      }
+    });
+
+    // 2º passo: Adicionar no final qualquer categoria que venha da base de dados e não esteja na lista
+    Object.keys(groupedProducts).forEach((category) => {
+      if (!sortedGroups[category]) {
+        sortedGroups[category] = groupedProducts[category];
+      }
+    });
+
+    return sortedGroups;
+  }, [groupedProducts]);
+
   return (
     <div className="min-h-screen bg-luxDark text-white flex flex-col justify-between">
       <SplashIntro />
@@ -159,7 +193,7 @@ export default function App() {
           {/* Listagem Renderizada por Categoria e Subcategoria */}
           {!loading && !error && filteredProducts.length > 0 && (
             <div className="space-y-10">
-              {Object.entries(groupedProducts).map(
+              {Object.entries(orderedGroupedProducts).map(
                 ([categoria, subcategoriasMap]) => (
                   <div key={categoria} className="space-y-6 animate-fadeIn">
                     {/* Título da Categoria Principal */}

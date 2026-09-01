@@ -18,7 +18,11 @@ export default {
           { title: 'Carteiras', value: 'Carteira' },
           { title: 'Calçados', value: 'Calçados' },
           { title: 'Bolsas', value: 'Bolsas' },
+          { title: 'Colares', value: 'Colares' },
+          { title: 'Pulseiras', value: 'Pulseiras' },
+          { title: 'Chapeus', value: 'Chapeus' },
           { title: 'Calcões', value: 'calcões' }
+
         ],
         layout: 'dropdown'
       }
@@ -29,11 +33,8 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Manga Comprida', value: 'Manga comprida' },
-          { title: 'Manga Curta', value: 'Manga curta' },
           { title: 'Social', value: 'Social' },
           { title: 'Desportivos', value: 'Desportivos' },
-          { title: 'Clássicos', value: 'Clássicos' },
           { title: 'Casual', value: 'Casual' }
         ],
         layout: 'dropdown'
