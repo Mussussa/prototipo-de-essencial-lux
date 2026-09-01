@@ -184,8 +184,11 @@ export default function ProductCard({ product, onSelectProduct, onAddToCart }) {
                     </>
                   )}
                 </div>
-                <h4 className="text-white font-bold text-xs sm:text-sm leading-snug truncate">
+                <h4 className="text-white font-bold text-xs sm:text-sm leading-snug ">
                   {product.name}
+                </h4>
+                <h4 className="text-luxGold font-bold text-xs sm:text-sm leading-snug ">
+                  {product.description}
                 </h4>
                 <p className="text-luxGold font-extrabold text-sm mt-0.5">
                   {product.price ? `${product.price} MT` : 'Sob Consulta'}
