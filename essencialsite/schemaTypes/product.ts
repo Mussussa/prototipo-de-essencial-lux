@@ -21,7 +21,8 @@ export default {
           { title: 'Colares', value: 'Colares' },
           { title: 'Pulseiras', value: 'Pulseiras' },
           { title: 'Chapeus', value: 'Chapeus' },
-          { title: 'Calcões', value: 'calcões' }
+          { title: 'Calcões', value: 'calcões' },
+          { title: 'Meias', value: 'Meias' },
 
         ],
         layout: 'dropdown'

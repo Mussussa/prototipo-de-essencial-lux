@@ -112,7 +112,9 @@ export default function App() {
       "Bolsas",
       "Calçados",
       "Colares",
-      "calcões"
+      "calcões",
+    "Meias"
+
     ];
 
     const sortedGroups = {};
